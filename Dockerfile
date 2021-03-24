@@ -1,4 +1,4 @@
-FROM openshift/base-centos7
+FROM centos/s2i-core-centos8
 
 
 RUN yum -y install epel-release
