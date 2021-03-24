@@ -1,19 +1,14 @@
-FROM rhscl/s2i-core-rhel7
+FROM registry.redhat.io/rhel7/rhel-atomic
 
-ENV SUMMARY="Base image with essential libraries and tools used as a base for \
-builder images like perl, python, ruby, etc." \
-    DESCRIPTION="The s2i-base image, being built upon s2i-core, provides any \
-images layered on top of it with all the tools needed to use source-to-image \
-functionality. Additionally, s2i-base also contains various libraries needed for \
-it to serve as a base for other builder images, like s2i-python or s2i-ruby." \
-    NODEJS_SCL=rh-nodejs10
+ENV SUMMARY="" \
+    DESCRIPTION=""
 
 LABEL summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
-      io.k8s.display-name="s2i base" \
-      com.redhat.component="s2i-base-container" \
-      name="rhscl/s2i-base-rhel7" \
+      io.k8s.display-name="rhel ataomic" \
+      com.redhat.component="atomic" \
+      name="registry.redhat.io/rhel7/rhel-atomic" \
       version="1" \
       com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
 
@@ -33,7 +28,7 @@ RUN rm /etc/rhsm-host && \
     yum-config-manager --enable rhel-7-server-rpms && \
     yum-config-manager --enable rhel-7-server-optional-rpms && \
     yum -y install epel-release && \
-    yum repolist && \
+    yum repolist > /dev/null && \
     INSTALL_PKGS="autoconf \
       automake \
       bzip2 \
@@ -60,9 +55,9 @@ RUN chmod -R ug+rwx /opt/app-root/src
 
 # initial update of av databases
 RUN wget -t 5 -T 99999 -O /opt/app-root/src/main.cvd https://clamav-biohub.s3.ca-central-1.amazonaws.com/main.cvd && \
-   wget -t 5 -T 99999 -O /opt/app-root/src/daily.cvd https://clamav-biohub.s3.ca-central-1.amazonaws.com/daily.cvd && \
-   wget -t 5 -T 99999 -O /opt/app-root/src/bytecode.cvd https://clamav-biohub.s3.ca-central-1.amazonaws.com/bytecode.cvd && \
-   chown clamupdate:clamupdate /opt/app-root/src/*.cvd
+    wget -t 5 -T 99999 -O /opt/app-root/src/daily.cvd https://clamav-biohub.s3.ca-central-1.amazonaws.com/daily.cvd && \
+    wget -t 5 -T 99999 -O /opt/app-root/src/bytecode.cvd https://clamav-biohub.s3.ca-central-1.amazonaws.com/bytecode.cvd && \
+    chown clamupdate:clamupdate /opt/app-root/src/*.cvd
 
 USER 1001
 
