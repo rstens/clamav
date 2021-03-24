@@ -20,16 +20,16 @@ COPY ./etc-pki-entitlement /etc/pki/entitlement
 COPY ./rhsm-conf /etc/rhsm
 COPY ./rhsm-ca /etc/rhsm/ca
 
-RUN rm /etc/rhsm-host && \
-    yum repolist > /dev/null && \
-    yum install -y yum-utils gettext && \
-    yum-config-manager --disable \* &> /dev/null && \
-    yum-config-manager --enable rhel-server-rhscl-7-rpms && \
-    yum-config-manager --enable rhel-7-server-rpms && \
-    yum-config-manager --enable rhel-7-server-optional-rpms && \
-    yum -y install epel-release && \
-    yum repolist > /dev/null && \
-    INSTALL_PKGS="autoconf \
+RUN rm /etc/rhsm-host
+RUN yum repolist > /dev/null
+RUN yum install -y yum-utils gettext
+RUN yum-config-manager --disable \* &> /dev/null
+RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
+RUN yum-config-manager --enable rhel-7-server-rpms
+RUN yum-config-manager --enable rhel-7-server-optional-rpms
+RUN yum -y install epel-release
+RUN yum repolist > /dev/null
+RUN INSTALL_PKGS="autoconf \
       automake \
       bzip2 \
       gcc-c++ \
