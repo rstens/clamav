@@ -46,10 +46,6 @@ RUN INSTALL_PKGS="autoconf \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS
     
-RUN cd /usr/local/src/ && \
-    wget https://github.com/repoforge/repo-files/blob/master/repo/RPM-GPG-KEY.dag.txt && \
-    rpm --import RPM-GPG-KEY.dag.txt    
-    
 RUN yum install -y clamav-server 
 RUN yum install -y clamav-data 
 RUN yum install -y clamav-update 
