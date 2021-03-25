@@ -61,6 +61,10 @@ RUN wget -t 5 -T 99999 -O /opt/app-root/src/main.cvd https://clamav-biohub.s3.ca
     wget -t 5 -T 99999 -O /opt/app-root/src/bytecode.cvd https://clamav-biohub.s3.ca-central-1.amazonaws.com/bytecode.cvd && \
     chown clamupdate:clamupdate /opt/app-root/src/*.cvd
 
+# Remove entitlements and Subscription Manager configs
+RUN rm -rf /etc/pki/entitlement && \
+    rm -rf /etc/rhsm
+
 USER 1001
 
 EXPOSE 3310
