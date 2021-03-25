@@ -54,6 +54,8 @@ RUN  yum -y clean all --enablerepo='*'
 COPY config/clamd.conf /etc/clamd.conf
 COPY config/freshclam.conf /etc/freshclam.conf
 
+RUN mkdir /opt/app-root
+RUN mkdir /opt/app-root/src
 RUN chown -R 1001:0 /opt/app-root/src
 RUN chmod -R ug+rwx /opt/app-root/src
 
