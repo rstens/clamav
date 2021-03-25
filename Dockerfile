@@ -30,9 +30,6 @@ RUN yum-config-manager --enable rhel-7-server-optional-rpms
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN subscription-manager repos --enable "rhel-*-optional-rpms" --enable "rhel-*-extras-rpms"
 RUN yum repolist > /dev/null
-RUN cd /usr/local/src/ && \
-    wget https://github.com/repoforge/repo-files/blob/master/repo/RPM-GPG-KEY.dag.txt && \
-    rpm --import RPM-GPG-KEY.dag.txt
 RUN INSTALL_PKGS="autoconf \
       automake \
       bzip2 \
@@ -48,6 +45,10 @@ RUN INSTALL_PKGS="autoconf \
       which" && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS
+    
+RUN cd /usr/local/src/ && \
+    wget https://github.com/repoforge/repo-files/blob/master/repo/RPM-GPG-KEY.dag.txt && \
+    rpm --import RPM-GPG-KEY.dag.txt    
     
 RUN yum install -y clamav-server 
 RUN yum install -y clamav-data 
