@@ -1,4 +1,4 @@
-FROM registry.redhat.io/rhel7/rhel-atomic
+FROM registry.access.redhat.com/rhel
 
 ENV SUMMARY="" \
     DESCRIPTION=""
