@@ -46,15 +46,8 @@ RUN INSTALL_PKGS="autoconf \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS
     
-RUN yum install -y clamav-server 
-RUN yum install -y clamav-data 
-RUN yum install -y clamav-update 
-RUN yum install -y clamav-filesystem 
-RUN yum install -y clamav 
-RUN yum install -y clamav-scanner-systemd 
-RUN yum install -y clamav-devel 
-RUN yum install -y clamav-lib 
-RUN yum install -y clamav-server-systemd     
+RUN yum install -y clamav
+RUN yum install -y clamd
     
 RUN  yum -y clean all --enablerepo='*'
 
