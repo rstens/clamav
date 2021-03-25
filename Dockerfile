@@ -30,6 +30,9 @@ RUN yum-config-manager --enable rhel-7-server-optional-rpms
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN subscription-manager repos --enable "rhel-*-optional-rpms" --enable "rhel-*-extras-rpms"
 RUN yum repolist > /dev/null
+RUN cd /usr/local/src/ && \
+    wget https://github.com/repoforge/repo-files/blob/master/repo/RPM-GPG-KEY.dag.txt && \
+    rpm --import RPM-GPG-KEY.dag.txt
 RUN INSTALL_PKGS="autoconf \
       automake \
       bzip2 \
@@ -42,11 +45,21 @@ RUN INSTALL_PKGS="autoconf \
       procps-ng \
       unzip \
       wget \
-      which \
-      clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd" && \
+      which" && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
-    yum -y clean all --enablerepo='*'
+    rpm -V $INSTALL_PKGS
+    
+RUN yum install -y clamav-server 
+RUN yum install -y clamav-data 
+RUN yum install -y clamav-update 
+RUN yum install -y clamav-filesystem 
+RUN yum install -y clamav 
+RUN yum install -y clamav-scanner-systemd 
+RUN yum install -y clamav-devel 
+RUN yum install -y clamav-lib 
+RUN yum install -y clamav-server-systemd     
+    
+RUN  yum -y clean all --enablerepo='*'
 
 COPY config/clamd.conf /etc/clamd.conf
 COPY config/freshclam.conf /etc/freshclam.conf
