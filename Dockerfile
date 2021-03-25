@@ -27,7 +27,8 @@ RUN yum-config-manager --disable \* &> /dev/null
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum-config-manager --enable rhel-7-server-rpms
 RUN yum-config-manager --enable rhel-7-server-optional-rpms
-RUN yum -y install epel-release
+RUN yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+RUN subscription-manager repos --enable "rhel-*-optional-rpms" --enable "rhel-*-extras-rpms"  --enable "rhel-ha-for-rhel-*-server-rpms"
 RUN yum repolist > /dev/null
 RUN INSTALL_PKGS="autoconf \
       automake \
